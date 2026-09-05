@@ -1,4 +1,5 @@
 # Training-free Full-Layer Memory Injection improves 4.8×
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22305403.svg)](https://doi.org/10.5281/zenodo.22305403)
 
 **Official implementation of the paper**:
 *基于编译期键值缓存的全层记忆注入方法：使用更大参数模型对小模型的知识注入*
@@ -17,6 +18,9 @@ A **training-free** method that injects externally compiled knowledge into a *fr
 1. An external compiler model (e.g., DeepSeek-V4-Flash) distills knowledge into canonical text (text domain only — it never emits vectors).
 2. The **executor model itself** (frozen) vectorizes the text into per-layer static **KV banks** (token-level; rotated at anchor positions 0..M−1).
 3. At inference the banks are injected into the executor's attention layers (head-anchored, sequence shifted by M) — **no retraining, no per-query re-encoding**, and memory size is decoupled from the context window.
+
+
+> ✅ **Reproduction verified**: running `run_arms3.py --tag repro_gh` with this repo's `code/qwen06b/` reproduces paper Table 2 exactly (0.079 / 0.571 / 0.621 / 0.571 / 0.079 / 0.062). Evidence: `results/repro_gh.json`.
 
 ## Main results (private-domain QA, same protocol)
 
